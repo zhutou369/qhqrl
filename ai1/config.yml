@@ -2,7 +2,7 @@ backend:
   name: github
   repo: zhutou369/qhqrl
   branch: main
-  base_url: https://ws-auth-gate.zhutou757.workers.dev/
+  base_url: https://solitary-star-d5ab.zhutou757.workers.dev/
   auth_endpoint: auth
 
 # 媒体库配置（必须放在根层级，不能缩进到 backend 里）
