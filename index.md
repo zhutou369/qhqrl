@@ -56,20 +56,22 @@
         <p>在跨国商业协作日益频繁的今天，<strong>whatsapp网页版</strong> 已然成为链接全球客户的“数字桥梁”。无论是处理日常订单、发送技术文档，还是进行实时的客户服务，<strong>whatsapp官方</strong> 提供的网页端服务都展现出了极高的便捷性与稳定性。通过电脑端的高效输入与多窗口操作，<strong>whatsapp网页版</strong> 有效解决了手机端输入缓慢的痛点。</p>
 
         <div class="recent-updates">
-            <h3>📂 后台文章实时更新</h3>
-            
-           
-            {%- for post in collections.blog | reverse -%}
-            <div class="article-item">
-             
-                    <a href="{{ post.url }}" class="article-item">
-                <h2 class="article-title">{{ post.data.title }}</h2>
-            <span class="time-label">{{ post.date | date: "%Y-%m-%d" }}</span>
-                <div class="article-meta">
-                    发布日期：{{ post.date }} | 分类：技术手册
-                </div>
-            </div>
-            {% endfor %}
+<h3>📂 后台文章实时更新</h3>
+    
+    {# 确保你的文章 Markdown 文件头部有 tags: blog #}
+    {% for post in collections.blog | reverse %}
+    <div class="article-item">
+        <h2 class="article-title">
+            <a href="{{ post.url }}">{{ post.data.title }}</a>
+        </h2>
+        <div class="article-meta">
+            发布日期：{{ post.date | date("Y-m-d") }} | 分类：技术手册
+        </div>
+    </div>
+    {% else %}
+    <p></p>
+    {% endfor %}
+</div>
 
            
             <div class="article-item">
