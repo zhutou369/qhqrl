@@ -1,7 +1,4 @@
----
-layout: layout.njk
-templateEngineOverride: njk, md
----
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -61,19 +58,19 @@ templateEngineOverride: njk, md
         <div class="recent-updates">
             <h3>📂 后台文章实时更新</h3>
             
-            {# 这里是 Nunjucks 循环语法，自动读取后台数据 #}
+           
             {% for post in collections.posts | reverse %}
             <div class="article-item">
                 <h2 class="article-title">
                     <a href="{{ post.url }}">{{ post.data.title }}</a>
                 </h2>
                 <div class="article-meta">
-                    发布日期：{{ post.date | date: "%Y-%m-%d" }} | 分类：技术手册
+                    发布日期：{{ post.date }} | 分类：技术手册
                 </div>
             </div>
             {% endfor %}
 
-            {# 静态占位示例，用于未配置环境时预览 #}
+           
             <div class="article-item">
                 <h2 class="article-title"><a href="article-1.html">如何解决 whatsapp网页版 扫码无响应的问题</a></h2>
                 <div class="article-meta">发布日期：2026-05-14 | 分类：常见问题</div>
