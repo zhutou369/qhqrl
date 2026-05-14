@@ -2,42 +2,89 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title or "WhatsApp web" }} - 官方指南</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - WhatsApp官方通讯中心</title>
+    <meta name="keywords" content="whatsapp网页版登录, whatsapp官方, whatsapp网页版登入, whatsapp在线登陆, whatapp web">
+    <meta name="description" content="{{ description or "提供专业的whatsapp网页版登录及官方安全通讯指南。" }}">
+    
     <style>
-        :root { --primary: #075E54; --accent: #25D366; }
-        body { font-family: sans-serif; line-height: 1.8; color: #333; margin: 0; background: #f4f7f6; }
-        header { background: var(--primary); color: #fff; padding: 40px; text-align: center; border-bottom: 4px solid var(--accent); }
-        .container { max-width: 1000px; margin: 20px auto; background: #fff; padding: 30px; border-radius: 8px; }
-        .post-list { border: 1px solid #eee; padding: 15px; background: #fafafa; }
-        .friend-links { margin-top: 30px; text-align: center; font-size: 14px; border-top: 1px solid #eee; padding-top: 20px; }
-        .friend-links a { margin: 0 10px; color: var(--primary); text-decoration: none; }
+        :root { --main-color: #075E54; --accent-color: #25D366; --bg: #f9f9f9; }
+        body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; color: #333; margin: 0; background: var(--bg); }
+        
+        /* 头部样式 */
+        header { background: var(--main-color); color: white; padding: 30px 0; text-align: center; }
+        header a { color: white; text-decoration: none; font-size: 24px; font-weight: bold; }
+
+        /* 文章容器 */
+        .article-container { max-width: 900px; margin: 40px auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        /* 文章内容 */
+        .article-header { border-bottom: 1px solid #eee; margin-bottom: 30px; padding-bottom: 20px; }
+        .article-header h1 { color: var(--main-color); margin: 0; font-size: 28px; }
+        .article-body { font-size: 16px; color: #444; }
+        .article-body h2 { color: var(--main-color); margin-top: 30px; border-left: 5px solid var(--accent-color); padding-left: 15px; }
+        .article-body p { margin-bottom: 20px; text-indent: 2em; }
+
+        /* 翻页导航 */
+        .post-nav { display: flex; justify-content: space-between; margin-top: 50px; padding-top: 20px; border-top: 2px solid #f0f0f0; }
+        .post-nav a { text-decoration: none; color: var(--main-color); font-weight: bold; transition: 0.3s; }
+        .post-nav a:hover { color: var(--accent-color); }
+
+        /* 站群友链 */
+        .friend-links { margin-top: 50px; padding: 20px; background: #fff; border-radius: 8px; text-align: center; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        .friend-links a { margin: 0 10px; color: #888; text-decoration: none; }
+
+        footer { text-align: center; padding: 40px; color: #999; font-size: 14px; }
     </style>
+
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
     <script>LA.init({id:"3K7l95Zodr0uFrIN",ck:"3K7l95Zodr0uFrIN"})</script>
 </head>
 <body>
-    <header><h1>WhatsApp web</h1></header>
-    <div class="container">
-        {% block content %}{% endblock %}
 
-        <div class="post-list">
-            <h3>📂 最新后台更新</h3>
-            {% for post in collections.posts %}
-            <div class="item">
-                <h2 style="font-size:18px;"><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-            </div>
-            {% endfor %}
+<header>
+    <a href="/">WhatsApp官方通讯中心</a>
+</header>
+
+<div class="article-container">
+    <article>
+        <div class="article-header">
+            <h1>{{ title }}</h1>
         </div>
 
-        <div class="post-pagination" style="display:flex; justify-content:space-between; margin-top:30px;">
-            {% if prevPost %}<a href="{{ prevPost.url }}">← 上一篇：{{ prevPost.data.title }}</a>{% endif %}
-            {% if nextPost %}<a href="{{ nextPost.url }}">下一篇：{{ nextPost.data.title }} →</a>{% endif %}
+        <div class="article-body">
+            {{ content | safe }}
         </div>
+    </article>
 
-        <div class="friend-links">
-            <strong>站群互链：</strong>
-            <a href="http://qhsdk.com">qhsdk.com</a> | <a href="http://qvfdc.com">qvfdc.com</a> | <a href="http://rcqry.com">rcqry.com</a> | <a href="http://rdqjm.com">rdqjm.com</a>
+    <nav class="post-nav">
+        <div class="prev">
+            {% if prevPost %}
+            <a href="{{ prevPost.url }}">← 上一篇：{{ prevPost.data.title }}</a>
+            {% else %}
+            <a href="/">← 返回首页</a>
+            {% endif %}
         </div>
-    </div>
+        <div class="next">
+            {% if nextPost %}
+            <a href="{{ nextPost.url }}">下一篇：{{ nextPost.data.title }} →</a>
+            {% endif %}
+        </div>
+    </nav>
+</div>
+
+<div class="friend-links" style="max-width: 900px; margin: 20px auto;">
+    <strong>站群推荐：</strong>
+    <a href="http://qhqrl.com">qhqrl.com</a>
+    <a href="http://qhsdk.com">qhsdk.com</a>
+    <a href="http://qvfdc.com">qvfdc.com</a>
+    <a href="http://rcqry.com">rcqry.com</a>
+    <a href="http://rdqjm.com">rdqjm.com</a>
+</div>
+
+<footer>
+    <p>&copy; 2026 WhatsApp官方技术支持. All Rights Reserved.</p>
+</footer>
+
 </body>
 </html>
