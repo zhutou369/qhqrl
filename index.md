@@ -1,3 +1,7 @@
+---
+layout: layout.njk
+templateEngineOverride: njk, md
+---
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
