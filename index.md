@@ -59,11 +59,12 @@
             <h3>📂 后台文章实时更新</h3>
             
            
-            {% for post in collections.posts | reverse %}
+            {%- for post in collections.blog | reverse -%}
             <div class="article-item">
-                <h2 class="article-title">
-                    <a href="{{ post.url }}">{{ post.data.title }}</a>
-                </h2>
+             
+                    <a href="{{ post.url }}" class="article-item">
+                <h2 class="article-title">{{ post.data.title }}</h2>
+            <span class="time-label">{{ post.date | date: "%Y-%m-%d" }}</span>
                 <div class="article-meta">
                     发布日期：{{ post.date }} | 分类：技术手册
                 </div>
