@@ -64,7 +64,7 @@
                     <a href="{{ post.url }}">{{ post.data.title }}</a>
                 </h2>
                 <div class="article-meta">
-                    发布日期：{{ post.date | date("Y-m-d") }} | 分类：技术手册
+                    发布日期：{{ post.date | date: "%Y-%m-%d" }} | 分类：技术手册
                 </div>
             </div>
             {% endfor %}
