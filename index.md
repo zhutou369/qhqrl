@@ -60,24 +60,25 @@ templateEngineOverride: njk, md
         <p>在跨国商业协作日益频繁的今天，<strong>whatsapp网页版</strong> 已然成为链接全球客户的“数字桥梁”。无论是处理日常订单、发送技术文档，还是进行实时的客户服务，<strong>whatsapp官方</strong> 提供的网页端服务都展现出了极高的便捷性与稳定性。通过电脑端的高效输入与多窗口操作，<strong>whatsapp网页版</strong> 有效解决了手机端输入缓慢的痛点。</p>
 
         <div class="recent-updates">
-            <h3>📂 后台文章实时更新</h3>
-            
-            {% for post in collections.blog | reverse %}
-            <div class="article-item">
-                <h2 class="article-title">
-                    <a href="{{ post.url }}">{{ post.data.title }}</a>
-                </h2>
-                <div class="article-meta">
-                    {# 修复后的日期过滤器语法 #}
-                    发布日期：{{ post.date.toLocaleDateString() }} | 分类：技术手册
-                </div>
-            </div>
-            {% else %}
-            <p style="color:#999; text-align:center; padding: 20px;">正在从后台同步最新技术文档，请稍后...</p>
-            {% endfor %}
-            
-            {# 保持原本的静态链接 #}
-            <div class="article-item">
+    <h3>📂 后台文章实时更新</h3>
+    
+    {# 自动循环读取 tags 包含 blog 的所有文章 #}
+    {% for post in collections.blog | reverse %}
+    <div class="article-item">
+        <h2 class="article-title">
+            <a href="{{ post.url }}">{{ post.data.title }}</a>
+        </h2>
+        <div class="article-meta">
+            {# 采用最基础的日期读取，防止环境缺少 date 过滤器导致报错 #}
+            发布日期：{{ post.date.toLocaleDateString() if post.date.toLocaleDateString else post.date }} | 分类：技术手册
+        </div>
+    </div>
+    {% else %}
+    <p style="color:#999; text-align:center; padding: 20px;">正在从后台同步最新技术文档，请稍后...</p>
+    {% endfor %}
+</div>
+
+<section class="seo-article-body">
                 <h2 class="article-title"><a href="article-1.html">如何解决 whatsapp网页版 扫码无响应的问题</a></h2>
                 <div class="article-meta">发布日期：2026-05-14 | 分类：常见问题</div>
             </div>
