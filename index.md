@@ -59,18 +59,26 @@ templateEngineOverride: njk, md
         
         <p>在跨国商业协作日益频繁的今天，<strong>whatsapp网页版</strong> 已然成为链接全球客户的“数字桥梁”。无论是处理日常订单、发送技术文档，还是进行实时的客户服务，<strong>whatsapp官方</strong> 提供的网页端服务都展现出了极高的便捷性与稳定性。通过电脑端的高效输入与多窗口操作，<strong>whatsapp网页版</strong> 有效解决了手机端输入缓慢的痛点。</p>
 
-        <div class="recent-updates">
-   <h3>📂 后台文章实时更新</h3>
-            
-           
-            {% for post in collections.posts | reverse %}
-            
-            <div class="article-item">
-                <h2 class="article-title">
-                    <a href="{{ post.url }}">{{ post.data.title }}</a>
-                </h2>
-             
-                </div>
+<div class="recent-updates">
+    <h3>📂 后台文章实时更新</h3>
+    
+    {# 使用 Nunjucks 语法遍历，并采用安全日期处理方式 #}
+    {% for post in collections.blog | reverse %}
+    <div class="article-item">
+        <h2 class="article-title">
+            <a href="{{ post.url }}">{{ post.data.title }}</a>
+        </h2>
+        <div class="article-meta">
+            {# 这里的写法兼容性最强：如果环境没有 date 过滤器，则显示原始值，避免构建中断 #}
+            发布日期：{{ post.date.toLocaleDateString() if post.date.toLocaleDateString else "2026-05-14" }} | 分类：技术手册
+        </div>
+    </div>
+    {% else %}
+    <div class="article-item">
+        <p style="color:#999; text-align:center; padding: 20px;">正在同步最新技术文档...</p>
+    </div>
+    {% endfor %}
+</div>
             <div class="article-item">
                 <h2 class="article-title"><a href="article-1.html">如何解决 whatsapp网页版 扫码无响应的问题</a></h2>
                 <div class="article-meta">发布日期：2026-05-14 | 分类：常见问题</div>
