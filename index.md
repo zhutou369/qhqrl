@@ -64,15 +64,12 @@ templateEngineOverride: njk, md
             
            
             {% for post in collections.posts | reverse %}
-            {%- for post in collections.blog | reverse -%}
+            
             <div class="article-item">
                 <h2 class="article-title">
                     <a href="{{ post.url }}">{{ post.data.title }}</a>
                 </h2>
              
-                    <a href="{{ post.url }}" class="article-item">
-                <h2 class="article-title">{{ post.data.title }}</h2>
-
                 </div>
             <div class="article-item">
                 <h2 class="article-title"><a href="article-1.html">如何解决 whatsapp网页版 扫码无响应的问题</a></h2>
