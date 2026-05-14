@@ -69,7 +69,7 @@ templateEngineOverride: njk, md
                 </h2>
                 <div class="article-meta">
                     {# 修复后的日期过滤器语法 #}
-                    发布日期：{{ post.date | date("yyyy-MM-dd") }} | 分类：技术手册
+                    发布日期：{{ post.date.toLocaleDateString() }} | 分类：技术手册
                 </div>
             </div>
             {% else %}
