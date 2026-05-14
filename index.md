@@ -122,13 +122,13 @@
 
 <footer class="footer">
     <div class="friend-links">
-        <strong>站群互链：</strong>
-        <a href="http://qhsdk.com">qhsdk.com</a>
-        <a href="http://qvfdc.com">qvfdc.com</a>
-        <a href="http://rcqry.com">rcqry.com</a>
-        <a href="http://rdqjm.com">rdqjm.com</a>
+        <strong>whatsapp互链：</strong>
+        <a href="https://ctysd.cn">whatsapp网页版登录</a>
+        <a href="https://qvfdc.com">WhatsApp web</a>
+        <a href="https://rcqry.com">whatsapp网页版</a>
+        <a href="https://rdqjm.com">whatsapp网页版登入</a>
     </div>
-    <p>&copy; 2026 qhqrl.com 版权所有 | 官方技术支持平台</p>
+    <p>&copy; 2026 qhqrl.com 版权所有 | whatsapp网页版</p>
 </footer>
 
 </body>
