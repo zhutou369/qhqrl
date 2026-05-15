@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <meta name="baidu-site-verification" content="codeva-E2LbTfbwDt" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhatsApp网页版登录官方入口 - 2026跨境通讯安全指南</title>
