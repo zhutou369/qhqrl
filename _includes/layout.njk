@@ -94,7 +94,23 @@
             {% endif %}
         </div>
     </nav>
-
+       <!-- 🌟 核心修改点 2：在文章正文底部分流，无缝嵌入最新文章列表组件（安全计数锁防止越界报错） -->
+        <section class="post-list-section">
+            <h3>📂 相关技术指南推荐</h3>
+            <ul class="embedded-post-list">
+                {% set loopCount = 0 %}
+                {% for item in collections.blog | reverse %}
+                    {% if loopCount < 5 %}
+                        <li class="embedded-post-item">
+                            <a href="{{ item.url }}">{{ item.data.title }}</a>
+                            <span class="embedded-post-date">{{ item.date | dateFilter }}</span>
+                        </li>
+                        {% set loopCount = loopCount + 1 %}
+                    {% endif %}
+                {% else %}
+                    <li style="color: #94a3b8; font-size: 0.95rem;">暂无相关推荐内容</li>
+                {% endfor %}
+            </ul>
     <div class="site-links">
         <strong>站群互链：</strong>
         <a href="https://ctysd.cn">whatsapp网页版登录</a>
