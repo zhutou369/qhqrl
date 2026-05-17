@@ -13,7 +13,6 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
     <style>
         :root { --main-green: #075E54; --light-green: #25D366; --text-main: #333; --bg-gray: #f4f7f6; }
         
-        /* 布局重构：解决排版不对齐 */
         body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; color: var(--text-main); margin: 0; background: var(--bg-gray); }
         header { background: var(--main-green); color: white; padding: 40px 0; text-align: center; border-bottom: 4px solid var(--light-green); }
         
@@ -40,12 +39,37 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
         p { margin-bottom: 20px; text-indent: 2em; text-align: justify; }
 
         /* 后台文章显示逻辑样式 */
-        .widget-title { font-size: 18px; border-bottom: 2px solid var(--light-green); padding-bottom: 10px; margin-bottom: 20px; color: var(--main-green); }
+        .widget-title { font-size: 18px; border-bottom: 2px solid var(--light-green); padding-bottom: 10px; margin-bottom: 20px; color: var(--main-green); font-weight: bold; }
         .post-feed { list-style: none; padding: 0; margin: 0; }
         .post-feed li { padding: 12px 0; border-bottom: 1px solid #eee; }
         .post-feed li:last-child { border-bottom: none; }
         .post-feed a { text-decoration: none; color: #444; font-size: 15px; transition: 0.3s; display: block; }
         .post-feed a:hover { color: var(--light-green); padding-left: 5px; }
+
+        /* 🎯 核心修复：“查看更多更新” 完美嵌入侧边栏底部的微调样式 */
+        .more-articles-sidebar-wrap { 
+            margin-top: 20px; 
+            padding-top: 15px; 
+            border-top: 1px dashed #eee; 
+            text-align: center; 
+        }
+        .more-articles-btn { 
+            display: block; 
+            padding: 10px 15px; 
+            background: var(--main-green); 
+            color: #fff !important; 
+            text-decoration: none; 
+            font-size: 14px; 
+            font-weight: bold;
+            border-radius: 6px; 
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(7,94,84,0.15);
+        }
+        .more-articles-btn:hover { 
+            background: var(--light-green); 
+            box-shadow: 0 4px 12px rgba(37,211,102,0.25);
+            transform: translateY(-1px);
+        }
 
         .footer { background: #fff; margin-top: 50px; padding: 40px 20px; border-top: 1px solid #eee; text-align: center; }
         .friend-links { margin-bottom: 20px; }
@@ -74,6 +98,7 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
 </div>
 
 <div class="grid-container">
+    <!-- 左侧主文章区域 -->
     <main class="main-article">
         <article id="article">
             <h1>2026年 whatsapp网页版登录 核心实操与全球趋势分析</h1>
@@ -81,7 +106,7 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
 
             <h2>一、识别与接入 whatsapp官方 网页版入口</h2>
             <p>搜索引擎中存在大量的仿冒页面，识别真正的 <strong>whatsapp官方网页版</strong> 是确保账户安全的第一步。官方入口通常不需要您输入手机号接收验证码，而是通过手机 App 的“关联设备”功能进行加密握手。<strong>whats官方网页版</strong> 的安全性基于 Signal 协议的延伸，确保了即使在网页端进行 <strong>whatsapp在线登陆</strong>，也能享有与手机端同级的端到端加密保护。</p>
-            <p>使用 <strong>whatapp网页版登录</strong> 时，建议优先选择 Chrome 或 Firefox 浏览器，以获得最佳的二进制流文件传输体验。针对 <strong>whats网页版登录</strong> 过程中可能出现的黑屏或二维码无法刷新问题，通常是因为 CDN 加速节点解析异常，此时清理浏览器缓存或重置 DNS 往往能解决大部分 <strong>whatapp网页版登入</strong> 的障碍。</p>
+            <p>使用 <strong>whatapp网页版登录</strong>时，建议优先选择 Chrome 或 Firefox 浏览器，以获得最佳的二进制流文件传输体验。针对 <strong>whats网页版登录</strong> 过程中可能出现的黑屏或二维码无法刷新问题，通常是因为 CDN 加速节点解析异常，此时清理浏览器缓存或重置 DNS 往往能解决大部分 <strong>whatapp网页版登入</strong> 的障碍。</p>
 
             <h2>二、进阶技巧：whatapp web 的多设备管理</h2>
             <p>随着 2026 年版本的迭代，<strong>whatsapp網頁版登入</strong> 现已全面支持独立在线。这意味着在完成初次扫码后，即便手机处于断网或关机状态，您的 <strong>whatsapp在线登陆</strong> 状态依然可以保持长达 14 天。这对于外贸客服团队来说，极大地提升了响应效率。通过 <strong>whats网页版登入</strong>，管理人员可以同时在四台不同设备上同步处理询盘，从而不遗漏任何一个商业机会。</p>
@@ -92,23 +117,24 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
         </article>
     </main>
 
+    <!-- 右侧侧边栏 -->
     <aside class="sidebar">
+        <!-- 资讯卡片开始 -->
         <div class="widget">
             <h3 class="widget-title">最新后台资讯</h3>
-        <div id="dynamic-posts">
+            <ul class="post-feed">
+                <!-- Eleventy 动态渲染前5篇文章 -->
                 {% set count = 0 %}
-    {% for post in collections.blog | reverse %}
-        {% if count < 5 %}
-            <li class="post-item">
-                <a href="{{ post.url }}">{{ post.data.title }}</a>
-            </li>
-            {% set count = count + 1 %}
-        {% endif %}
-    {% else %}
-                </div>
-            </a>
-            {%- endfor -%}
+                {% for post in collections.blog | reverse %}
+                    {% if count < 5 %}
+                        <li>
+                            <a href="{{ post.url }}">{{ post.data.title }}</a>
+                        </li>
+                        {% set count = count + 1 %}
+                    {% endif %}
+                {% endfor %}
                 
+                <!-- 静态追加文章 -->
                 <li><a href="#">如何优化 whatsapp官方 连接响应速度？</a></li>
                 <li><a href="#">2026年 whatapp web 安全升级公告</a></li>
                 <li><a href="#">whats官方网页版 常见报错及排查手册</a></li>
@@ -116,7 +142,13 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
                 <li><a href="#">whatapp网页版登入 隐私权限设置指南</a></li>
                 <li><a href="#">针对 whatsapp在线登陆 的双重验证开启步骤</a></li>
             </ul>
+
+            <!-- 🎯 完美移至此处：卡片内部最下方，带虚线隔离线与精致的满宽按钮 -->
+            <div class="more-articles-sidebar-wrap">
+                <a href="/blog/" class="more-articles-btn">查看更多更新 &raquo;</a>
+            </div>
         </div>
+        <!-- 资讯卡片结束 -->
 
         <div class="widget" style="margin-top: 30px; background: #f9f9f9; padding: 15px; border-radius: 5px;">
             <h3 class="widget-title" style="font-size: 16px;">搜索热度</h3>
@@ -128,7 +160,7 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
         </div>
     </aside>
 </div>
-        <a href="/blog/" class="more-articles-btn">查看更多更新 &raquo;</a>
+
 <footer class="footer">
     <div class="friend-links">
         <strong>whatsapp互链：</strong>
