@@ -1,3 +1,6 @@
+---
+# 这里是你的 Front Matter 配置，母版会自动渲染
+---
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -5,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - WhatsApp web</title>
     <meta name="keywords" content="whatsapp网页版登录, whatsapp官方, whatsapp网页版登入, whatsapp在线登陆, whatapp web">
-    <meta name="description" content="{{ description or "提供专业的whatsapp网页版登录及官方安全通讯指南。" }}">
+    <meta name="description" content="{{ description or '提供专业的whatsapp网页版登录及官方安全通讯指南。' }}">
     
     <style>
         :root { --main-color: #075E54; --accent-color: #25D366; --bg: #f4f7f6; }
@@ -15,11 +18,16 @@
         header a { color: white; text-decoration: none; font-size: 22px; font-weight: bold; }
 
         /* 文章容器：强制对齐 */
-        .article-wrapper { max-width: 1000px; margin: 30px auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); flex: 1; }
+        .article-wrapper { max-width: 1000px; margin: 30px auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); flex: 1; box-sizing: border-box; }
         
-        .article-header { border-bottom: 1px solid #eee; margin-bottom: 30px; padding-bottom: 15px; }
-        .article-header h1 { color: var(--main-color); margin: 0; font-size: 28px; }
+        .article-header { border-bottom: 1px solid #eee; margin-bottom: 25px; padding-bottom: 15px; }
+        .article-header h1 { color: var(--main-color); margin: 0 0 15px 0; font-size: 28px; }
         
+        /* 🎯 列表页面包屑导航样式 */
+        .breadcrumb-nav { font-size: 14px; color: #888; margin-bottom: 10px; }
+        .breadcrumb-nav a { color: var(--main-color); text-decoration: none; font-weight: bold; }
+        .breadcrumb-nav a:hover { color: var(--accent-color); text-decoration: underline; }
+
         .article-body { font-size: 16px; color: #444; text-align: justify; }
         .article-body h2 { color: var(--main-color); margin-top: 35px; border-left: 5px solid var(--accent-color); padding-left: 15px; }
         .article-body p { margin-bottom: 20px; text-indent: 2em; }
@@ -48,12 +56,22 @@
         }
         .nav-link:hover { color: var(--accent-color); }
 
+        /* 🎯 相关技术指南推荐模块美化 */
+        .post-list-section { margin-top: 50px; padding-top: 30px; border-top: 2px dashed #eee; }
+        .post-list-section h3 { color: var(--main-color); font-size: 18px; margin-bottom: 20px; }
+        .embedded-post-list { list-style: none; padding: 0; margin: 0; }
+        .embedded-post-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+        .embedded-post-item:last-child { border-bottom: none; }
+        .embedded-post-item a { text-decoration: none; color: #444; font-size: 15px; transition: color 0.3s; }
+        .embedded-post-item a:hover { color: var(--accent-color); }
+        .embedded-post-date { font-size: 13px; color: #999; }
+
         /* 站群互链 */
         .site-links { margin-top: 40px; padding: 20px; background: #fafafa; border-radius: 5px; text-align: center; }
         .site-links a { margin: 0 12px; color: #666; text-decoration: none; font-size: 14px; }
         .site-links a:hover { color: var(--main-color); }
 
-        footer { text-align: center; padding: 40px; color: #bbb; font-size: 13px; }
+        footer { text-align: center; padding: 40px; color: #bbb; font-size: 13px; background: transparent; }
     </style>
 
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
@@ -66,6 +84,11 @@
 </header>
 
 <div class="article-wrapper">
+    <!-- 🎯 核心升级 1：面包屑导航（精准指引用户返回列表页，极利于蜘蛛抓取结构树） -->
+    <div class="breadcrumb-nav">
+        当前位置：<a href="/">首页</a> &gt; <a href="/blog/">文章列表页</a> &gt; 正文内容
+    </div>
+
     <article>
         <div class="article-header">
             <h1>{{ title }}</h1>
@@ -76,6 +99,7 @@
         </div>
     </article>
 
+    <!-- 上一篇 / 下一篇 翻页导航 -->
     <nav class="post-nav">
         <div class="nav-item prev">
             {% if prevPost %}
@@ -94,23 +118,29 @@
             {% endif %}
         </div>
     </nav>
-       <!-- 🌟 核心修改点 2：在文章正文底部分流，无缝嵌入最新文章列表组件（安全计数锁防止越界报错） -->
-        <section class="post-list-section">
-            <h3>📂 相关技术指南推荐</h3>
-            <ul class="embedded-post-list">
-                {% set loopCount = 0 %}
-                {% for item in collections.blog | reverse %}
-                    {% if loopCount < 5 %}
-                        <li class="embedded-post-item">
-                            <a href="{{ item.url }}">{{ item.data.title }}</a>
-                            <span class="embedded-post-date">{{ item.date | dateFilter }}</span>
-                        </li>
-                        {% set loopCount = loopCount + 1 %}
-                    {% endif %}
-                {% else %}
-                    <li style="color: #94a3b8; font-size: 0.95rem;">暂无相关推荐内容</li>
-                {% endfor %}
-            </ul>
+
+    <!-- 🎯 核心升级 2：全面修复闭合死锁后的相关指南分流组件 -->
+    <section class="post-list-section">
+        <h3>📂 相关技术指南推荐</h3>
+        <ul class="embedded-post-list">
+            {% set loopCount = 0 %}
+            {% for item in collections.blog | reverse %}
+                {% if loopCount < 5 %}
+                    <li class="embedded-post-item">
+                        <a href="{{ item.url }}">{{ item.data.title }}</a>
+                        {% if item.date %}
+                        <span class="embedded-post-date">{{ item.date.getFullYear() }}-{{ (item.date.getMonth()+1).toString().padStart(2, '0') }}-{{ item.date.getDate().toString().padStart(2, '0') }}</span>
+                        {% endif %}
+                    </li>
+                    {% set loopCount = loopCount + 1 %}
+                {% endif %}
+            {% else %}
+                <li style="color: #94a3b8; font-size: 0.95rem;">暂无相关推荐内容</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <!-- 站群互链 -->
     <div class="site-links">
         <strong>站群互链：</strong>
         <a href="https://ctysd.cn">whatsapp网页版登录</a>
@@ -118,7 +148,7 @@
         <a href="https://rcqry.com">whatsapp网页版</a>
         <a href="https://rdqjm.com">whatsapp网页版登入</a>
     </div>
-</div>
+</div> <!-- .article-wrapper 完美在此闭合 -->
 
 <footer>
     <p>&copy; 2026 qhqrl.com - WhatsApp web</p>
