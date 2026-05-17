@@ -93,10 +93,15 @@
         <div class="widget">
             <h3 class="widget-title">最新后台资讯</h3>
         <div id="dynamic-posts">
-            {%- for post in collections.blog | reverse -%}
-            <a href="{{ post.url }}" class="article-item">
-                <div class="article-content-wrapper">
-                    <h2 class="article-title">{{ post.data.title }}</h2>
+                {% set count = 0 %}
+    {% for post in collections.blog | reverse %}
+        {% if count < 5 %}
+            <li class="post-item">
+                <a href="{{ post.url }}">{{ post.data.title }}</a>
+            </li>
+            {% set count = count + 1 %}
+        {% endif %}
+    {% else %}
                 </div>
             </a>
             {%- endfor -%}
