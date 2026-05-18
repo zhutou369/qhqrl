@@ -14,16 +14,15 @@
         :root { --main-color: #075E54; --accent-color: #25D366; --bg: #f4f7f6; }
         body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; color: #333; margin: 0; background: var(--bg); display: flex; flex-direction: column; min-height: 100vh; }
         
+        /* 🎯 优化内页公共页头：去除 h1 标签包装 */
         header { background: var(--main-color); color: white; padding: 30px 0; text-align: center; border-bottom: 4px solid var(--accent-color); }
-        header a { color: white; text-decoration: none; font-size: 22px; font-weight: bold; }
+        .header-logo { color: white; text-decoration: none; font-size: 22px; font-weight: bold; display: inline-block; }
 
-        /* 文章容器：强制对齐 */
         .article-wrapper { max-width: 1000px; margin: 30px auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); flex: 1; box-sizing: border-box; }
         
         .article-header { border-bottom: 1px solid #eee; margin-bottom: 25px; padding-bottom: 15px; }
         .article-header h1 { color: var(--main-color); margin: 0 0 15px 0; font-size: 28px; }
         
-        /* 🎯 列表页面包屑导航样式 */
         .breadcrumb-nav { font-size: 14px; color: #888; margin-bottom: 10px; }
         .breadcrumb-nav a { color: var(--main-color); text-decoration: none; font-weight: bold; }
         .breadcrumb-nav a:hover { color: var(--accent-color); text-decoration: underline; }
@@ -32,31 +31,14 @@
         .article-body h2 { color: var(--main-color); margin-top: 35px; border-left: 5px solid var(--accent-color); padding-left: 15px; }
         .article-body p { margin-bottom: 20px; text-indent: 2em; }
 
-        /* 翻页导航：完美左右对齐 */
-        .post-nav { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: stretch;
-            margin-top: 60px; 
-            padding-top: 25px; 
-            border-top: 1px solid #eee; 
-            gap: 20px;
-        }
+        .post-nav { display: flex; justify-content: space-between; align-items: stretch; margin-top: 60px; padding-top: 25px; border-top: 1px solid #eee; gap: 20px; }
         .nav-item { flex: 1; display: flex; flex-direction: column; }
         .nav-item.next { text-align: right; align-items: flex-end; }
         
         .nav-label { font-size: 12px; color: #999; margin-bottom: 8px; text-transform: uppercase; }
-        .nav-link { 
-            text-decoration: none; 
-            color: var(--main-color); 
-            font-weight: bold; 
-            font-size: 15px;
-            max-width: 300px;
-            transition: color 0.3s;
-        }
+        .nav-link { text-decoration: none; color: var(--main-color); font-weight: bold; font-size: 15px; max-width: 300px; transition: color 0.3s; }
         .nav-link:hover { color: var(--accent-color); }
 
-        /* 🎯 相关技术指南推荐模块美化 */
         .post-list-section { margin-top: 50px; padding-top: 30px; border-top: 2px dashed #eee; }
         .post-list-section h3 { color: var(--main-color); font-size: 18px; margin-bottom: 20px; }
         .embedded-post-list { list-style: none; padding: 0; margin: 0; }
@@ -66,25 +48,22 @@
         .embedded-post-item a:hover { color: var(--accent-color); }
         .embedded-post-date { font-size: 13px; color: #999; }
 
-        /* 站群互链 */
         .site-links { margin-top: 40px; padding: 20px; background: #fafafa; border-radius: 5px; text-align: center; }
         .site-links a { margin: 0 12px; color: #666; text-decoration: none; font-size: 14px; }
         .site-links a:hover { color: var(--main-color); }
 
         footer { text-align: center; padding: 40px; color: #bbb; font-size: 13px; background: transparent; }
     </style>
-
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
     <script>LA.init({id:"3K7l95Zodr0uFrIN",ck:"3K7l95Zodr0uFrIN"})</script>
 </head>
 <body>
 
 <header>
-    <a href="/">WhatsApp web</a>
+    <a href="/" class="header-logo">WhatsApp web</a>
 </header>
 
 <div class="article-wrapper">
-    <!-- 🎯 核心升级 1：面包屑导航（精准指引用户返回列表页，极利于蜘蛛抓取结构树） -->
     <div class="breadcrumb-nav">
         当前位置：<a href="/">首页</a> &gt; <a href="/blog/">文章列表页</a> &gt; 正文内容
     </div>
@@ -99,7 +78,6 @@
         </div>
     </article>
 
-    <!-- 上一篇 / 下一篇 翻页导航 -->
     <nav class="post-nav">
         <div class="nav-item prev">
             {% if prevPost %}
@@ -119,7 +97,6 @@
         </div>
     </nav>
 
-    <!-- 🎯 核心升级 2：全面修复闭合死锁后的相关指南分流组件 -->
     <section class="post-list-section">
         <h3>📂 相关技术指南推荐</h3>
         <ul class="embedded-post-list">
@@ -140,7 +117,6 @@
         </ul>
     </section>
 
-    <!-- 站群互链 -->
     <div class="site-links">
         <strong>站群互链：</strong>
         <a href="https://ctysd.cn">whatsapp网页版登录</a>
@@ -148,7 +124,7 @@
         <a href="https://rcqry.com">whatsapp网页版</a>
         <a href="https://rdqjm.com">whatsapp网页版登入</a>
     </div>
-</div> <!-- .article-wrapper 完美在此闭合 -->
+</div>
 
 <footer>
     <p>&copy; 2026 qhqrl.com - WhatsApp web</p>
