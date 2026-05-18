@@ -14,23 +14,17 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
         :root { --main-green: #075E54; --light-green: #25D366; --text-main: #333; --bg-gray: #f4f7f6; }
         
         body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; color: var(--text-main); margin: 0; background: var(--bg-gray); }
+        
+        /* 🎯 优化页头：支持 div 容器样式稳定 */
         header { background: var(--main-green); color: white; padding: 40px 0; text-align: center; border-bottom: 4px solid var(--light-green); }
+        header .logo-text { font-size: 28px; font-weight: bold; margin: 0; color: white; }
+        header p { margin: 10px 0 0 0; }
         
         .nav-wrap { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 999; }
         nav { max-width: 1200px; margin: 0 auto; padding: 15px; text-align: center; }
         nav a { margin: 0 20px; text-decoration: none; color: var(--main-green); font-weight: bold; }
 
-        /* 使用 Grid 确保两栏完美对齐 */
-        .grid-container { 
-            display: grid; 
-            grid-template-columns: 1fr 300px; 
-            gap: 30px; 
-            max-width: 1200px; 
-            margin: 30px auto; 
-            padding: 0 20px;
-            align-items: start; 
-        }
-
+        .grid-container { display: grid; grid-template-columns: 1fr 300px; gap: 30px; max-width: 1200px; margin: 30px auto; padding: 0 20px; align-items: start; }
         .main-article { background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .sidebar { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
 
@@ -38,7 +32,6 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
         h2 { color: var(--main-green); border-left: 5px solid var(--light-green); padding-left: 15px; margin: 30px 0 20px; font-size: 22px; }
         p { margin-bottom: 20px; text-indent: 2em; text-align: justify; }
 
-        /* 后台文章显示逻辑样式 */
         .widget-title { font-size: 18px; border-bottom: 2px solid var(--light-green); padding-bottom: 10px; margin-bottom: 20px; color: var(--main-green); font-weight: bold; }
         .post-feed { list-style: none; padding: 0; margin: 0; }
         .post-feed li { padding: 12px 0; border-bottom: 1px solid #eee; }
@@ -46,38 +39,15 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
         .post-feed a { text-decoration: none; color: #444; font-size: 15px; transition: 0.3s; display: block; }
         .post-feed a:hover { color: var(--light-green); padding-left: 5px; }
 
-        /* 🎯 核心修复：“查看更多更新” 完美嵌入侧边栏底部的微调样式 */
-        .more-articles-sidebar-wrap { 
-            margin-top: 20px; 
-            padding-top: 15px; 
-            border-top: 1px dashed #eee; 
-            text-align: center; 
-        }
-        .more-articles-btn { 
-            display: block; 
-            padding: 10px 15px; 
-            background: var(--main-green); 
-            color: #fff !important; 
-            text-decoration: none; 
-            font-size: 14px; 
-            font-weight: bold;
-            border-radius: 6px; 
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(7,94,84,0.15);
-        }
-        .more-articles-btn:hover { 
-            background: var(--light-green); 
-            box-shadow: 0 4px 12px rgba(37,211,102,0.25);
-            transform: translateY(-1px);
-        }
+        .more-articles-sidebar-wrap { margin-top: 20px; padding-top: 15px; border-top: 1px dashed #eee; text-align: center; }
+        .more-articles-btn { display: block; padding: 10px 15px; background: var(--main-green); color: #fff !important; text-decoration: none; font-size: 14px; font-weight: bold; border-radius: 6px; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(7,94,84,0.15); }
+        .more-articles-btn:hover { background: var(--light-green); box-shadow: 0 4px 12px rgba(37,211,102,0.25); transform: translateY(-1px); }
 
         .footer { background: #fff; margin-top: 50px; padding: 40px 20px; border-top: 1px solid #eee; text-align: center; }
         .friend-links { margin-bottom: 20px; }
         .friend-links a { margin: 0 10px; color: #888; text-decoration: none; font-size: 14px; }
         
-        @media (max-width: 850px) {
-            .grid-container { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 850px) { .grid-container { grid-template-columns: 1fr; } }
     </style>
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
     <script>LA.init({id:"3K7l95Zodr0uFrIN",ck:"3K7l95Zodr0uFrIN"})</script>
@@ -85,7 +55,7 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
 <body>
 
 <header>
-    <h1>WhatsApp官方通讯指引</h1>
+    <div class="logo-text">WhatsApp官方通讯指引</div>
     <p>提供安全、专业、稳定的 whatsapp网页版登录 解决方案</p>
 </header>
 
@@ -98,7 +68,6 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
 </div>
 
 <div class="grid-container">
-    <!-- 左侧主文章区域 -->
     <main class="main-article">
         <article id="article">
             <h1>2026年 whatsapp网页版登录 核心实操与全球趋势分析</h1>
@@ -113,28 +82,21 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
             <p>安全防范方面，在公共环境完成 <strong>whatsapp网页版登录</strong> 任务后，务必通过手机端的“退出所有设备”功能一键下线。<strong>whatsapp官方</strong> 持续升级的防钓鱼系统，会自动识别异常的 <strong>whats网页版登录</strong> 环境并发出警报。配合 51.la 统计监控，站长可以清晰看到流量来源，确保 <strong>whatsapp官方网页版</strong> 指引页面的受众均为真实用户。</p>
 
             <h2>三、关于通讯协议的原创技术解读</h2>
-            <p><strong>whatapp web</strong> 采用的是一种基于 WebSocks 的长连接技术，这确保了消息的实时推送。在进行 <strong>whatsapp在线登陆</strong> 握手时，服务器会分配一个临时的公钥。只有当手机端私钥签名确认后，网页端才能解密历史聊天记录。这种严谨的逻辑，正是 <strong>whatsapp官方</strong> 能够在全球通讯市场立于不败之地的核心竞争力。对于长期依赖 <strong>whatsapp网页版登入</strong> 的专业用户，理解这些底层逻辑有助于更好地规避网络风险。</p>
+            <p><strong>whatapp web</strong> 采用的是一种基于 WebSocks 的长连接技术，这确保了消息的实时推送。在进行 <strong>whatsapp在线登陆</strong> 握手时，服务器会分配一个临时的公钥。只有当手机端私钥签名确认后，网页端才能解密历史聊天记录。这种严谨的 logic，正是 <strong>whatsapp官方</strong> 能够在全球通讯市场立于不败之地的核心竞争力。对于长期依赖 <strong>whatsapp网页版登入</strong> 的专业用户，理解这些底层逻辑有助于更好地规避网络风险。</p>
         </article>
     </main>
 
-    <!-- 右侧侧边栏 -->
     <aside class="sidebar">
-        <!-- 资讯卡片开始 -->
         <div class="widget">
             <h3 class="widget-title">最新后台资讯</h3>
             <ul class="post-feed">
-                <!-- Eleventy 动态渲染前5篇文章 -->
                 {% set count = 0 %}
                 {% for post in collections.blog | reverse %}
                     {% if count < 5 %}
-                        <li>
-                            <a href="{{ post.url }}">{{ post.data.title }}</a>
-                        </li>
+                        <li><a href="{{ post.url }}">{{ post.data.title }}</a></li>
                         {% set count = count + 1 %}
                     {% endif %}
                 {% endfor %}
-                
-                <!-- 静态追加文章 -->
                 <li><a href="#">如何优化 whatsapp官方 连接响应速度？</a></li>
                 <li><a href="#">2026年 whatapp web 安全升级公告</a></li>
                 <li><a href="#">whats官方网页版 常见报错及排查手册</a></li>
@@ -142,13 +104,10 @@ title: WhatsApp网页版登录官方入口 | whatsapp网页版登录
                 <li><a href="#">whatapp网页版登入 隐私权限设置指南</a></li>
                 <li><a href="#">针对 whatsapp在线登陆 的双重验证开启步骤</a></li>
             </ul>
-
-            <!-- 🎯 完美移至此处：卡片内部最下方，带虚线隔离线与精致的满宽按钮 -->
             <div class="more-articles-sidebar-wrap">
                 <a href="/blog/" class="more-articles-btn">查看更多更新 &raquo;</a>
             </div>
         </div>
-        <!-- 资讯卡片结束 -->
 
         <div class="widget" style="margin-top: 30px; background: #f9f9f9; padding: 15px; border-radius: 5px;">
             <h3 class="widget-title" style="font-size: 16px;">搜索热度</h3>
