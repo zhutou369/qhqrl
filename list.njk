@@ -1,97 +1,134 @@
 ---
-title: whatsapp网页版登录
-layout: layout.njk
-pagination:
-  data: collections.blog
-  size: 10
-  alias: posts
-  reverse: true
-# 🎯 核心修复：根据当前页码动态分配路径，彻底解决多页面输出冲突
-permalink: "blog/{% if pagination.pageNumber > 0 %}page-{{ pagination.pageNumber }}/{% endif %}index.html"
+# 这里是你的 Front Matter 配置，母版会自动渲染
 ---
-
-<!-- 
-   注意：因为使用了 layout: layout.njk，母版会自动生成 head、header 和 body 大框架。
-   这里我们只需要专注输出列表页的核心包裹器即可，样式会自动继承或补充。
--->
-<main class="list-container" style="max-width: 900px; margin: 0 auto; padding: 10px 0;">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - WhatsApp web</title>
+    <meta name="keywords" content="whatsapp网页版登录, whatsapp官方, whatsapp网页版登入, whatsapp在线登陆, whatapp web">
+    <meta name="description" content="{{ description or '提供专业的whatsapp网页版登录及官方安全通讯指南。' }}">
     
-    <!-- 动态提示当前页码（只在第2页及以后显示），SEO 非常友好 -->
-    {% if pagination.pageNumber > 0 %}
-        <div style="color: #999; margin-bottom: 20px; font-size: 0.9rem;">
-            当前位置：<a href="/" style="color: #666; text-decoration: none;">首页</a> &gt; <a href="/blog/" style="color: #666; text-decoration: none;">文章列表</a> &gt; 第 {{ pagination.pageNumber + 1 }} 页
-        </div>
-    {% endif %}
-
-    <!-- 文章列表布局样式 -->
     <style>
-        .article-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
-        .article-item { 
-            padding: 20px; 
-            border-radius: 8px; 
-            background: #f8f9fa; 
-            border-left: 4px solid transparent;
-            transition: all 0.3s ease;
-        }
-        .article-item:hover { 
-            background: #fff; 
-            border-left-color: var(--accent-green, #128C7E); 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transform: translateX(4px);
-        }
-        .item-title { margin: 0 0 10px 0; font-size: 1.3rem; }
-        .item-title a { color: #222; text-decoration: none; transition: color 0.2s; }
-        .item-title a:hover { color: var(--accent-green, #128C7E); }
+        :root { --main-color: #075E54; --accent-color: #25D366; --bg: #f4f7f6; }
+        body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; color: #333; margin: 0; background: var(--bg); display: flex; flex-direction: column; min-height: 100vh; }
         
-        .item-meta { color: #999; font-size: 0.85rem; display: flex; gap: 15px; }
-        .item-excerpt { color: #666; font-size: 0.95rem; margin-top: 10px; line-height: 1.6; }
+        /* 🎯 优化内页公共页头：去除 h1 标签包装 */
+        header { background: var(--main-color); color: white; padding: 30px 0; text-align: center; border-bottom: 4px solid var(--accent-color); }
+        .header-logo { color: white; text-decoration: none; font-size: 22px; font-weight: bold; display: inline-block; }
 
-        .pagination-nav { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 50px; padding-top: 30px; border-top: 2px solid #f4f4f4; }
-        .page-link { padding: 8px 16px; border: 1px solid #ddd; border-radius: 6px; color: #555; text-decoration: none; font-size: 0.95rem; transition: all 0.2s; }
-        .page-link:hover { border-color: var(--accent-green, #128C7E); color: var(--accent-green, #128C7E); background: #fff; }
-        .page-active { padding: 8px 16px; background: var(--main-green, #075E54); color: #fff; border: 1px solid var(--main-green, #075E54); border-radius: 6px; font-weight: bold; font-size: 0.95rem; }
-        .page-disabled { padding: 8px 16px; color: #ccc; border: 1px solid #eee; border-radius: 6px; cursor: not-allowed; }
+        .article-wrapper { max-width: 1000px; margin: 30px auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); flex: 1; box-sizing: border-box; }
+        
+        .article-header { border-bottom: 1px solid #eee; margin-bottom: 25px; padding-bottom: 15px; }
+        .article-header h1 { color: var(--main-color); margin: 0 0 15px 0; font-size: 28px; }
+        
+        .breadcrumb-nav { font-size: 14px; color: #888; margin-bottom: 10px; }
+        .breadcrumb-nav a { color: var(--main-color); text-decoration: none; font-weight: bold; }
+        .breadcrumb-nav a:hover { color: var(--accent-color); text-decoration: underline; }
+
+        .article-body { font-size: 16px; color: #444; text-align: justify; }
+        .article-body h2 { color: var(--main-color); margin-top: 35px; border-left: 5px solid var(--accent-color); padding-left: 15px; }
+        .article-body p { margin-bottom: 20px; text-indent: 2em; }
+
+        .post-nav { display: flex; justify-content: space-between; align-items: stretch; margin-top: 60px; padding-top: 25px; border-top: 1px solid #eee; gap: 20px; }
+        .nav-item { flex: 1; display: flex; flex-direction: column; }
+        .nav-item.next { text-align: right; align-items: flex-end; }
+        
+        .nav-label { font-size: 12px; color: #999; margin-bottom: 8px; text-transform: uppercase; }
+        .nav-link { text-decoration: none; color: var(--main-color); font-weight: bold; font-size: 15px; max-width: 300px; transition: color 0.3s; }
+        .nav-link:hover { color: var(--accent-color); }
+
+        .post-list-section { margin-top: 50px; padding-top: 30px; border-top: 2px dashed #eee; }
+        .post-list-section h3 { color: var(--main-color); font-size: 18px; margin-bottom: 20px; }
+        .embedded-post-list { list-style: none; padding: 0; margin: 0; }
+        .embedded-post-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+        .embedded-post-item:last-child { border-bottom: none; }
+        .embedded-post-item a { text-decoration: none; color: #444; font-size: 15px; transition: color 0.3s; }
+        .embedded-post-item a:hover { color: var(--accent-color); }
+        .embedded-post-date { font-size: 13px; color: #999; }
+
+        .site-links { margin-top: 40px; padding: 20px; background: #fafafa; border-radius: 5px; text-align: center; }
+        .site-links a { margin: 0 12px; color: #666; text-decoration: none; font-size: 14px; }
+        .site-links a:hover { color: var(--main-color); }
+
+        footer { text-align: center; padding: 40px; color: #bbb; font-size: 13px; background: transparent; }
     </style>
+    <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({id:"3K7l95Zodr0uFrIN",ck:"3K7l95Zodr0uFrIN"})</script>
+</head>
+<body>
 
-    <!-- 文章列表循环体 -->
-    <div class="article-list">
-        {% for post in posts %}
-        <article class="article-item">
-            <h2 class="item-title">
-                <a href="{{ post.url }}">{{ post.data.title }}</a>
-            </h2>
-            <div class="item-meta">
-                {% if post.date %}
-                <span>发布时间：{{ post.date.getFullYear() }}-{{ (post.date.getMonth()+1).toString().padStart(2, '0') }}-{{ post.date.getDate().toString().padStart(2, '0') }}</span>
-                {% endif %}
-            </div>
-            <div class="item-excerpt">
-                {{ post.templateContent | striptags | truncate(120) }}
-            </div>
-        </article>
-        {% endfor %}
+<header>
+    <a href="/" class="header-logo">WhatsApp web</a>
+</header>
+
+<div class="article-wrapper">
+    <div class="breadcrumb-nav">
+        当前位置：<a href="/">首页</a> &gt; <a href="/blog/">文章列表页</a> &gt; 正文内容
     </div>
 
-    <!-- 分页导航 -->
-    <nav class="pagination-nav">
-        {% if pagination.href.previous %}
-            <a href="{{ pagination.href.previous }}" class="page-link">« 上一页</a>
-        {% else %}
-            <span class="page-disabled">« 上一页</span>
-        {% endif %}
+    <article>
+        <div class="article-header">
+            <h1>{{ title }}</h1>
+        </div>
 
-        {% for pageEntry in pagination.pages %}
-            {% if pagination.pageNumber == loop.index0 %}
-                <span class="page-active">{{ loop.index }}</span>
+        <div class="article-body">
+            {{ content | safe }}
+        </div>
+    </article>
+
+    <nav class="post-nav">
+        <div class="nav-item prev">
+            {% if prevPost %}
+                <span class="nav-label">上一篇教程</span>
+                <a href="{{ prevPost.url }}" class="nav-link">← {{ prevPost.data.title }}</a>
             {% else %}
-                <a href="{{ pagination.hrefs[loop.index0] }}" class="page-link">{{ loop.index }}</a>
+                <span class="nav-label">已经是第一篇</span>
+                <a href="/" class="nav-link">← 返回首页入口</a>
             {% endif %}
-        {% endfor %}
-
-        {% if pagination.href.next %}
-            <a href="{{ pagination.href.next }}" class="page-link">下一页 »</a>
-        {% else %}
-            <span class="page-disabled">下一页 »</span>
-        {% endif %}
+        </div>
+        
+        <div class="nav-item next">
+            {% if nextPost %}
+                <span class="nav-label">下一篇动态</span>
+                <a href="{{ nextPost.url }}" class="nav-link">{{ nextPost.data.title }} →</a>
+            {% endif %}
+        </div>
     </nav>
-</main>
+
+    <section class="post-list-section">
+        <h3>📂 相关技术指南推荐</h3>
+        <ul class="embedded-post-list">
+            {% set loopCount = 0 %}
+            {% for item in collections.blog | reverse %}
+                {% if loopCount < 5 %}
+                    <li class="embedded-post-item">
+                        <a href="{{ item.url }}">{{ item.data.title }}</a>
+                        {% if item.date %}
+                        <span class="embedded-post-date">{{ item.date.getFullYear() }}-{{ (item.date.getMonth()+1).toString().padStart(2, '0') }}-{{ item.date.getDate().toString().padStart(2, '0') }}</span>
+                        {% endif %}
+                    </li>
+                    {% set loopCount = loopCount + 1 %}
+                {% endif %}
+            {% else %}
+                <li style="color: #94a3b8; font-size: 0.95rem;">暂无相关推荐内容</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <div class="site-links">
+        <strong>站群互链：</strong>
+        <a href="https://ctysd.cn">whatsapp网页版登录</a>
+        <a href="https://qvfdc.com">WhatsApp web</a>
+        <a href="https://rcqry.com">whatsapp网页版</a>
+        <a href="https://rdqjm.com">whatsapp网页版登入</a>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 qhqrl.com - WhatsApp web</p>
+</footer>
+
+</body>
+</html>
