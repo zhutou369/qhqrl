@@ -2,6 +2,34 @@ const { GoogleGenAI } = require('@google/genai');
 const fs = require('fs');
 const path = require('path');
 
+// 🛡️ 智能重试核心函数：应对 Google API 503（拥塞）与 429（限流）
+async function generateWithRetry(aiClient, modelName, prompt, maxRetries = 3, initialDelay = 5000) {
+    let currentDelay = initialDelay;
+    
+    for (let i = 0; i < maxRetries; i++) {
+        try {
+            return await aiClient.models.generateContent({
+                model: modelName,
+                contents: prompt,
+            });
+        } catch (error) {
+            const is503 = error.message && error.message.includes('503');
+            const is429 = error.message && error.message.includes('429');
+            const statusMatch = error.status === 503 || error.status === 429;
+
+            // 如果遇到 503 或 429，并且还没达到最大重试次数，执行静默等待重试
+            if ((is503 || is429 || statusMatch) && i < maxRetries - 1) {
+                console.warn(`⚠️ [API 波动] 触发 ${is503 ? '503 拥塞' : '429 限流'}。将在 ${currentDelay / 1000} 秒后进行第 ${i + 1} 次原地重试...`);
+                await new Promise(resolve => setTimeout(resolve, currentDelay));
+                currentDelay *= 2; // 指数级退避（5s -> 10s -> 20s）
+                continue;
+            }
+            // 其他致命错误或重试耗尽，直接抛出
+            throw error;
+        }
+    }
+}
+
 async function runAutoBot() {
     // 1. 检查环境变量中是否存在密钥
     const apiKey = process.env.GEMINI_API_KEY;
@@ -121,10 +149,8 @@ async function runAutoBot() {
 
         try {
             console.log('正在连接 Gemini API 生产高质量内容...');
-            const response = await ai.models.generateContent({
-                model: 'gemini-2.5-flash',
-                contents: prompt,
-            });
+            // 🔥 关键重构点：替换为带重试功能的智能生成方法
+            const response = await generateWithRetry(ai, 'gemini-2.5-flash', prompt, 3, 5000);
 
             const articleContent = response.text;
             if (!articleContent) {
@@ -148,7 +174,7 @@ async function runAutoBot() {
         }
     }
 
-    // 🌟 【重构重点】：当所有的循环（如5次）全部执行完毕完毕后，再一次性回写成标准的 JSON 数组格式
+    // 🌟 当所有的循环全部执行完毕后，再一次性回写成标准的 JSON 数组格式
     try {
         fs.writeFileSync(jsonPath, JSON.stringify(keywords, null, 2), 'utf-8');
         console.log(`\n📉 词库整体更新完毕！剩余可用关键词数: ${keywords.length}`);
